@@ -1,3 +1,4 @@
+const concat_map = require("concat-map");
 const net = require("net");
 const conColor = require('./globalvar').conColor;
 const conLine = require('./globalvar').conLine;
@@ -23,8 +24,21 @@ const connect = function () {
 
   // What to do on connections
   conn.on("connect", () => {
-    console.log(`\t${conColor.green}successfully connected to the game server${conColor.reset}`)
+    console.log(`${conColor.bright}${conLine.centeredHalfLine("Success! Connected to the game server.", conColor.cyan)}`);
     conn.write("Name: JCR");
+    console.log(`${conColor.bright}${conLine.centeredHalfLine("Welcome to...", conColor.cyan)}`);
+    console.log(`${conColor.magenta} .----------------.  .-----------------. .----------------.  .----------------.  .----------------. `);
+    console.log(`| ${conColor.orange}.--------------. ${conColor.magenta}|| ${conColor.orange}.--------------. ${conColor.magenta}|| ${conColor.orange}.--------------. ${conColor.magenta}|| ${conColor.orange}.--------------. ${conColor.magenta}|| ${conColor.orange}.--------------. ${conColor.magenta}|`);
+    console.log(`| ${conColor.orange}|   ${conColor.green} _______   ${conColor.orange}| ${conColor.magenta}|| ${conColor.orange}| ${conColor.green}____  _____  ${conColor.orange}| ${conColor.magenta}|| ${conColor.orange}|     ${conColor.green} __      ${conColor.orange}| ${conColor.magenta}|| ${conColor.orange}|  ${conColor.green}___  ____   ${conColor.orange}| ${conColor.magenta}|| ${conColor.orange}|  ${conColor.green}_________   ${conColor.orange}| ${conColor.magenta}|`);
+    console.log(`| ${conColor.orange}|   ${conColor.green}/  ___  |  ${conColor.orange}| ${conColor.magenta}|| ${conColor.orange}|${conColor.green}|_   \\|_   _| ${conColor.orange}| ${conColor.magenta}|| ${conColor.orange}| ${conColor.green}    /  \\     ${conColor.orange}| ${conColor.magenta}|| ${conColor.orange}| ${conColor.green}|_  ||_  _|  ${conColor.orange}| ${conColor.magenta}|| ${conColor.orange}| ${conColor.green}|_   ___  |  ${conColor.orange}| ${conColor.magenta}|`);
+    console.log(`|${conColor.orange} |  ${conColor.green}|  (__ \\_| ${conColor.orange} | ${conColor.magenta}|| ${conColor.orange}|  ${conColor.green}|   \\ | |   ${conColor.orange}| ${conColor.magenta}||${conColor.orange} |   ${conColor.green} / /\\ \\   ${conColor.orange} | ${conColor.magenta}|| ${conColor.orange}|   ${conColor.green}| |_/ /    ${conColor.orange}| ${conColor.magenta}|| ${conColor.orange}|   ${conColor.green}| |_  \\_|  ${conColor.orange}| ${conColor.magenta}|`);
+    console.log(`| ${conColor.orange}|   ${conColor.green}'.___\`-.  ${conColor.orange} | ${conColor.magenta}|| ${conColor.orange}| ${conColor.green} | |\\ \\| |   ${conColor.orange}| ${conColor.magenta}|| ${conColor.orange}| ${conColor.green}  / \____ \\  ${conColor.orange} | ${conColor.magenta}|| ${conColor.orange}| ${conColor.green}  |  __'.    ${conColor.orange}| ${conColor.magenta}|| ${conColor.orange}|  ${conColor.green} |  _|  _   ${conColor.orange}| ${conColor.magenta}|`);
+    console.log(`| ${conColor.orange}| ${conColor.green} |\\____)  | ${conColor.orange} | ${conColor.magenta}|| ${conColor.orange}| ${conColor.green}_| |_\\   |_  ${conColor.orange}| ${conColor.magenta}|| ${conColor.orange}| ${conColor.green}_/ /    \\ \\_ ${conColor.orange}| ${conColor.magenta}|| ${conColor.orange}| ${conColor.green} _| |  \\ \\_  ${conColor.orange}| ${conColor.magenta}|| ${conColor.orange}|  ${conColor.green}_| |___/ |  ${conColor.orange}| ${conColor.magenta}|`);
+    console.log(`| ${conColor.orange}| ${conColor.green} |_______.'  ${conColor.orange}| ${conColor.magenta}|| ${conColor.orange}|${conColor.green}|_____|\\____| ${conColor.orange}|${conColor.magenta} || ${conColor.orange}|${conColor.green}|____|  |____|${conColor.orange}| ${conColor.magenta}|| ${conColor.orange}| ${conColor.green}|____||____| ${conColor.orange}| ${conColor.magenta}|| ${conColor.orange}| ${conColor.green}|_________|  ${conColor.orange}| ${conColor.magenta}|`);
+    console.log(`| ${conColor.orange}|              | ${conColor.magenta}|| ${conColor.orange}|              | ${conColor.magenta}|| ${conColor.orange}|              | ${conColor.magenta}||${conColor.orange} |              | ${conColor.magenta}|| ${conColor.orange}|              | ${conColor.magenta}|`);
+    console.log(`| ${conColor.orange}'--------------' ${conColor.magenta}|| ${conColor.orange}'--------------' ${conColor.magenta}|| ${conColor.orange}'--------------' ${conColor.magenta}|| ${conColor.orange}'--------------' ${conColor.magenta}|| ${conColor.orange}'--------------' ${conColor.magenta}|`);
+    console.log(` '----------------'  '----------------'  '----------------'  '----------------'  '----------------' `);
+    console.log(`${conColor.cyan}${conColor.bright}Enjoy your game JCR!${conColor.reset}\n`);
     // conn.write("Move: up");
     // setTimeout(() => {
     //   conn.write ("Move: up")
@@ -37,7 +51,6 @@ const connect = function () {
     //   numberOfLoops -= 1;
     //   conn.write ("Move: up")
     // }, 250);
-    console.log(`${conColor.orange}${conLine.halfLine}${conColor.reset}`);
   });
 
   // 

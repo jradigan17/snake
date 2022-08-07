@@ -1,3 +1,4 @@
+const concat_map = require("concat-map");
 const net = require("net");
 const conColor = require('./globalvar').conColor;
 const conLine = require('./globalvar').conLine;
@@ -10,11 +11,16 @@ const conLine = require('./globalvar').conLine;
 // "Move: right" - move left one square (unless facing left)
 //----------------------------------------------------------
 
-const setupInput = () => {
+// Stores the active TCP connection object.
+let connection;
+
+// Handles key strokes
+const setupInput = (conn) => {
   const stdin = process.stdin;
   stdin.setRawMode(true);
   stdin.setEncoding("utf8");
   stdin.resume();
+  connection = conn;
 
   stdin.on("data", handleUserInput);
 
@@ -24,9 +30,25 @@ const setupInput = () => {
 const handleUserInput = (key) => {
   // your code here
   if (key === '\u0078' || key === '\u0003') { // x or ctrl-c to exit
-    process.stdout.write(`${conColor.red}\tThanks for playing! Disonnecting from Snake.\n${conColor.reset}`);
-    console.log(`${conColor.orange}${conLine.halfLine}${conColor.reset}`)
+    process.stdout.write(`${conLine.centeredHalfLine("Thanks for playing! Disonnecting from Snake.", conColor.red)}`);
+    console.log(`\n${conLine.halfLineDash(conColor.orange)}`);
     process.exit();
+  }
+
+  if (key === 'w') { // 'w'
+    connection.write("Move: up");
+  }
+
+  if (key === 'a') { // 'a'
+    connection.write("Move: left");
+  }
+
+  if (key === 's') { // 's'
+    connection.write("Move: down");
+  }
+  
+  if (key === 'd') { // 'd'
+    connection.write("Move: right");
   }
   // if (key === '\u0062') {  // 'b'
   //   process.stdout.write('\x07');

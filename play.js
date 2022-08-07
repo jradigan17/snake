@@ -20,9 +20,9 @@ const conLine = require('./globalvar').conLine;
 
 
 //----------------------------------------------------------
-console.log(`${conColor.orange}${conLine.halfLine}${conColor.reset}`);
-console.log(`${conColor.cyan}Connecting ...${conColor.reset}`);
-connect();
-setupInput();
+console.log(`\n${conLine.halfLineDash(conColor.orange)}`);
+console.log(`${conColor.bright}${conColor.cyan}Connecting ...${conColor.reset}`);
+// connect();
+setupInput(connect());
 //----------------------------------------------------------
 
