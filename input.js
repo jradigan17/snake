@@ -1,7 +1,10 @@
+//----------------------------------------------------------
+// Required exports
 const concat_map = require("concat-map");
 const net = require("net");
 const conColor = require('./globalvar').conColor;
 const conLine = require('./globalvar').conLine;
+//----------------------------------------------------------
 
 //----------------------------------------------------------
 // Snake Allowable Moves
@@ -11,9 +14,12 @@ const conLine = require('./globalvar').conLine;
 // "Move: right" - move left one square (unless facing left)
 //----------------------------------------------------------
 
+//----------------------------------------------------------
 // Stores the active TCP connection object.
 let connection;
+//----------------------------------------------------------
 
+//----------------------------------------------------------
 // Handles key strokes
 const setupInput = (conn) => {
   const stdin = process.stdin;
@@ -26,7 +32,10 @@ const setupInput = (conn) => {
 
   return stdin;
 };
+//----------------------------------------------------------
 
+//----------------------------------------------------------
+// Handles user input
 const handleUserInput = (key) => {
   // your code here
   if (key === '\u0078' || key === '\u0003') { // x or ctrl-c to exit
@@ -35,31 +44,42 @@ const handleUserInput = (key) => {
     process.exit();
   }
 
-  if (key === 'w') { // 'w'
-    connection.write("Move: up");
-  }
-
-  if (key === 'a') { // 'a'
-    connection.write("Move: left");
-  }
-
-  if (key === 's') { // 's'
-    connection.write("Move: down");
+  // Movement Key Press
+  const movement = {
+    w : "Move: up",
+    a : "Move: left",
+    s : "Move: down",
+    d : "Move: right",
+    action : function(key) {
+      for (item in this) {
+        if (item === key) {
+          connection.write(`${this[item]}`);
+        }
+      }
+    }
   }
   
-  if (key === 'd') { // 'd'
-    connection.write("Move: right");
-  }
-  // if (key === '\u0062') {  // 'b'
-  //   process.stdout.write('\x07');
-  // }
-  // if (key > 0 && key < 10) {
-  //   //if (key === '\u0033') {  // '3'
-  // console.log(`${conColorGreen}     ⏲️ Setting timer for ${key} seconds...${conColorReset}`);
-  //   setTimeout(() => {
-  //     process.stdout.write(`${'\x07'}${conColorRed} \t🔔 Your ${key} second timer is up! 🔔\n`);
-  //   }, (key * 1000));
-  // }
+  movement.action(key);
+
+  // Canned Messages Key Press
+  const cannedMessages = {
+    n : "Nice Move!",
+    c : "Close Call!",
+    i : "I Want Cookies!",
+    b : "Bring It On!",
+    g : "Guinness",
+    message : function(key) {
+      for (item in this) {
+        if (item === key) {
+          connection.write(`Say: ${this[item]}`);
+        }
+      }
+    }
+  };
+
+  cannedMessages.message(key);
+  
 };
+//----------------------------------------------------------
 
 module.exports = setupInput;
