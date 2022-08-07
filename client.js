@@ -1,4 +1,6 @@
 const net = require("net");
+const conColor = require('./globalvar').conColor;
+const conLine = require('./globalvar').conLine;
 
 //----------------------------------------------------------
 // Snake Allowable Moves
@@ -21,7 +23,7 @@ const connect = function () {
 
   // What to do on connections
   conn.on("connect", () => {
-    console.log(`successfully connected to the game server`)
+    console.log(`\t${conColor.green}successfully connected to the game server${conColor.reset}`)
     conn.write("Name: JCR");
     // conn.write("Move: up");
     // setTimeout(() => {
@@ -35,20 +37,20 @@ const connect = function () {
     //   numberOfLoops -= 1;
     //   conn.write ("Move: up")
     // }, 250);
+    console.log(`${conColor.orange}${conLine.halfLine}${conColor.reset}`);
   });
 
   // 
   conn.on("data", (data) => {
-    console.log("Server says: ", data);
+    console.log(`${conColor.cyan}Server says: ${data}${conColor.reset}`);
   });
 
   return conn;
 };
-
-console.log("Connecting ...");
-connect();
 //----------------------------------------------------------
 
+
 //----------------------------------------------------------
-// Export Connect Function
+// Export Connect Function 
 module.exports = connect
+//----------------------------------------------------------
