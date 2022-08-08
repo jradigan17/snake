@@ -38,7 +38,7 @@ const setupInput = (conn) => {
 const handleUserInput = (key) => {
   // your code here
   if (key === '\u0078' || key === '\u0003') { // x or ctrl-c to exit
-    process.stdout.write(`${conLine.centeredHalfLine(`\nThanks for playing! Disonnecting from Snake.`, conColor.red)}`);
+    process.stdout.write(`${conLine.centeredHalfLine("Thanks for playing! Disonnecting from Snake.", conColor.red)}`);
     console.log(`\n${conLine.halfLineDash(conColor.orange)}`);
     process.exit();
   }

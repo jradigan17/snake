@@ -32,3 +32,6 @@ Before you can run this client, you will need to be running the server side whic
 - [ ] "Number of Moves" counter (number of direction changes made)
 - [ ] Automatic snake movement (via client side) after first keypress
 - [ ] Every time you change snake's direction, it gets faster!
+
+## Original Code:
+Located here: https://github.com/lighthouse-labs/snek-multiplayer
