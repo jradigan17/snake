@@ -1,7 +1,11 @@
-const concat_map = require("concat-map");
+//----------------------------------------------------------
+// Required exports
 const net = require("net");
 const conColor = require('./globalvar').conColor;
 const conLine = require('./globalvar').conLine;
+const { IP, PORT } = require("./constants");
+const {cannedMessages} = require('./constants');
+//----------------------------------------------------------
 
 //----------------------------------------------------------
 // Snake Allowable Moves
@@ -13,10 +17,16 @@ const conLine = require('./globalvar').conLine;
 
 //----------------------------------------------------------
 // establishes a connection with the game server
-const connect = function () {
+const connect = function(user) {
   const conn = net.createConnection({
-    host:  'localhost', // IP address here,
-    port:  50541 // PORT number here,
+    host:  IP, // IP address here,
+    port:  PORT // PORT number here,
+  });
+
+  conn.on('error', (errorCode) => {
+    console.log(`${conColor.red}  GAME START ERROR: ${errorCode}${conColor.reset}`);
+    console.log(`${conColor.cyan}${conColor.bright}     (did you forget to start the game server, perhaps?)${conColor.reset}\n`);
+    process.exit();
   });
 
   // interpret incoming data as text
@@ -25,7 +35,7 @@ const connect = function () {
   // What to do on connections
   conn.on("connect", () => {
     console.log(`${conColor.bright}${conLine.centeredHalfLine("Success! Connected to the game server.", conColor.cyan)}`);
-    conn.write("Name: JCR");
+    conn.write(`Name: ${user}`);
     console.log(`${conColor.bright}${conLine.centeredHalfLine("Welcome to...", conColor.cyan)}`);
     console.log(`${conColor.magenta} .----------------.  .-----------------. .----------------.  .----------------.  .----------------. `);
     console.log(`| ${conColor.orange}.--------------. ${conColor.magenta}|| ${conColor.orange}.--------------. ${conColor.magenta}|| ${conColor.orange}.--------------. ${conColor.magenta}|| ${conColor.orange}.--------------. ${conColor.magenta}|| ${conColor.orange}.--------------. ${conColor.magenta}|`);
@@ -38,24 +48,18 @@ const connect = function () {
     console.log(`| ${conColor.orange}|              | ${conColor.magenta}|| ${conColor.orange}|              | ${conColor.magenta}|| ${conColor.orange}|              | ${conColor.magenta}||${conColor.orange} |              | ${conColor.magenta}|| ${conColor.orange}|              | ${conColor.magenta}|`);
     console.log(`| ${conColor.orange}'--------------' ${conColor.magenta}|| ${conColor.orange}'--------------' ${conColor.magenta}|| ${conColor.orange}'--------------' ${conColor.magenta}|| ${conColor.orange}'--------------' ${conColor.magenta}|| ${conColor.orange}'--------------' ${conColor.magenta}|`);
     console.log(` '----------------'  '----------------'  '----------------'  '----------------'  '----------------' `);
-    console.log(`${conColor.cyan}${conColor.bright}Enjoy your game JCR!${conColor.reset}\n`);
-    // conn.write("Move: up");
-    // setTimeout(() => {
-    //   conn.write ("Move: up")
-    // }, (1000));
-    // let numberOfLoops = 5;
-    // intervalID = setInterval(() => {
-    //   if (numberOfLoops <= 0) {
-    //     clearInterval(intervalID)
-    //   }
-    //   numberOfLoops -= 1;
-    //   conn.write ("Move: up")
-    // }, 250);
+    console.log(`${conColor.cyan}${conColor.bright}Enjoy your game ${user}!\n`);
+    console.log(`${conColor.magenta}Move: ${conColor.orange}w${conColor.magenta} = Up | ${conColor.orange}a${conColor.magenta} - Left | ${conColor.orange}d${conColor.magenta} - Right | ${conColor.orange}s${conColor.magenta} - Down | ${conColor.orange}x${conColor.magenta} = Exit\n`);
+    console.log(`${conColor.yellow}Don't forget you can send other players messages!`);
+    console.log(`Key:\tMessage:`);
+    for (let item in cannedMessages) {
+      console.log(`${conColor.yellow}${conColor.italics} ${item}\t${cannedMessages[item]}${conColor.reset}`);
+    }
   });
 
-  // 
+  // Receive client write from server
   conn.on("data", (data) => {
-    console.log(`${conColor.cyan}Server says: ${data}${conColor.reset}`);
+    console.log(`\n${conColor.cyan}Server says: ${data}${conColor.reset}`);
   });
 
   return conn;
@@ -64,6 +68,6 @@ const connect = function () {
 
 
 //----------------------------------------------------------
-// Export Connect Function 
-module.exports = connect
+// Export Connect Function
+module.exports = connect;
 //----------------------------------------------------------

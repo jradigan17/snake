@@ -1,9 +1,8 @@
 //----------------------------------------------------------
 // Required exports
-const concat_map = require("concat-map");
-const net = require("net");
 const conColor = require('./globalvar').conColor;
 const conLine = require('./globalvar').conLine;
+const {cannedMessages} = require('./constants');
 //----------------------------------------------------------
 
 //----------------------------------------------------------
@@ -39,7 +38,7 @@ const setupInput = (conn) => {
 const handleUserInput = (key) => {
   // your code here
   if (key === '\u0078' || key === '\u0003') { // x or ctrl-c to exit
-    process.stdout.write(`${conLine.centeredHalfLine("Thanks for playing! Disonnecting from Snake.", conColor.red)}`);
+    process.stdout.write(`${conLine.centeredHalfLine(`\nThanks for playing! Disonnecting from Snake.`, conColor.red)}`);
     console.log(`\n${conLine.halfLineDash(conColor.orange)}`);
     process.exit();
   }
@@ -51,33 +50,25 @@ const handleUserInput = (key) => {
     s : "Move: down",
     d : "Move: right",
     action : function(key) {
-      for (item in this) {
+      for (let item in this) {
         if (item === key) {
           connection.write(`${this[item]}`);
         }
       }
     }
-  }
+  };
   
-  movement.action(key);
-
-  // Canned Messages Key Press
-  const cannedMessages = {
-    n : "Nice Move!",
-    c : "Close Call!",
-    i : "I Want Cookies!",
-    b : "Bring It On!",
-    g : "Guinness",
-    message : function(key) {
-      for (item in this) {
-        if (item === key) {
-          connection.write(`Say: ${this[item]}`);
-        }
+  // Canned Messages
+  const message = (key) => {
+    for (let item in cannedMessages) {
+      if (item === key) {
+        connection.write(`Say: ${cannedMessages[item]}`);
       }
     }
   };
 
-  cannedMessages.message(key);
+  movement.action(key);
+  message(key);
   
 };
 //----------------------------------------------------------
